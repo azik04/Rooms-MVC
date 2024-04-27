@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@model Room;
+<div class="container-xxl bg-white p-0">
+    <form asp-controller="Room" asp-action="UpdRoom" method="post" enctype="multipart/form-data">
+        <label for="Name">Name:</label>
+        <input type="text" asp-for="@Model.Name" name="Name" />
+        <label for="Description">Description:</label>
+        <input type="text" asp-for="@Model.Description" name="Description" id="Description" />
+        <button type="submit">Submit</button>
+    </form>
+</div>

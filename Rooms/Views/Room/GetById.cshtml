@@ -1,0 +1,42 @@
+﻿@using Rooms.ViewModels;
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@model CreateCommentViewModel;
+<div class="container-xxl bg-white p-0">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="card">
+                <img src="/img/@Model.RoomPhoto" class="card-img-top room-image" alt="Room Image">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">@Model.Description</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h1>Comments</h1>
+            @if (Model.Comment != null && Model.Comment.Count > 0)
+            {
+                @foreach (var item in Model.Comment)
+                {
+                    <p>@item.Body</p>
+                }
+            }
+            else
+            {
+                <p>No comments available.</p>
+            }
+            <form method="post">
+                <div class="form-group">
+                    <label for="commentBody">Comment</label>
+                    <input asp-for="Body" class="form-control" id="commentBody" />
+                </div>
+                <input type="hidden" asp-for="UserId" value="1" />
+                <input type="hidden" asp-for="RoomId" value="@Model.Id" />
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
