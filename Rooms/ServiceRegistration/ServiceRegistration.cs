@@ -16,11 +16,12 @@ namespace Rooms.ServiceRegistration
             Services.AddScoped<IRoomService, RoomService>();
             Services.AddScoped<IOrderService, OrderService>();
             Services.AddScoped<ICommentService, CommentService>();
-            Services.AddScoped<IUserService, UserService>();
-
-            Services.AddIdentity<Users, IdentityRole>()
-                  .AddDefaultTokenProviders()
-                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            Services.AddIdentity<Users, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = false;
+            })
+     .AddEntityFrameworkStores<ApplicationDbContext>()
+     .AddDefaultTokenProviders();
 
             Services.Configure<IdentityOptions>(options =>
             {
