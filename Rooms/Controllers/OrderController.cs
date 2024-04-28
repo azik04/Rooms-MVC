@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Rooms.Models;
 using Rooms.Services.Implementations;
 using Rooms.Services.Interfaces;
 using Rooms.ViewModels;
+using System.Security.Cryptography;
 
 namespace Rooms.Controllers
 {
@@ -31,10 +33,20 @@ namespace Rooms.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllOrders()
+        public async Task<IActionResult> GetAllOrders(int pg = 5)
         {
             var data = _orderService.GetOrders();
-            return View(data);
+
+            const int pageSize = 1;
+            if (pg < 1)
+                pg = 1;
+            int recsCount = data.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var datas = data.Skip(recSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View(datas);
         }
         public async Task<IActionResult> RemoveOrder(int id)
         {

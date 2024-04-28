@@ -2,6 +2,7 @@
 using Rooms.Models;
 using Rooms.Services.Interfaces;
 using Rooms.ViewModels;
+using System.Web.Mvc;
 
 namespace Rooms.Services.Implementations
 {
@@ -24,7 +25,7 @@ namespace Rooms.Services.Implementations
                     Request = order.Request,
                 };
                 await _db.Orders.AddAsync(data);
-                await _db.SaveChangesAsync();
+                _db.SaveChanges();
                 return data;
         }
 
@@ -32,10 +33,9 @@ namespace Rooms.Services.Implementations
         {
             var ord = _db.Orders.Where(x => x.Id == userId).ToList();
             return ord;
-
         }
 
-        public ICollection<Bookeds> GetOrders()
+        public ICollection<Bookeds> GetOrders(int pg = 1)
         {
             var ord = _db.Orders.Where(x => !x.IsDeleted).ToList();
             return ord;
