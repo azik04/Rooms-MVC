@@ -81,14 +81,22 @@ namespace Rooms.Services.Implementations
         public List<Room> GetAll()
         {
             var data = _db.Rooms.Where(x => !x.IsDeleted).ToList();
+
             foreach (var item in data)
             {
                 item.RoomPhotos = _db.Photos.Where(x => x.RoomId == item.Id).ToList();
             }
-            //foreach (var item in data)
-            //{
-            //    item.Comment = _db.Comments.Where(x => x.RoomId == item.Id).ToList();
-            //}
+            foreach (var item in data)
+            {
+                item.Comment = _db.Comments.Where(x => x.RoomId == item.Id).ToList();
+            }
+            return data;
+        }
+
+        public List<Room> GetByPage(int pageNumber, int pageSize)
+        {
+            int startIndex = (pageNumber - 1) * pageSize;
+            var data = _db.Rooms.Where(x => !x.IsDeleted).Skip(startIndex).Take(pageSize).ToList();
             return data;
         }
 

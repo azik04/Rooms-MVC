@@ -19,7 +19,8 @@ namespace Rooms.Controllers
         public IActionResult Index()
         {
             var data = _service.GetAll();
-                return View(data);
+            var room = data.Take(3).ToList();
+                return View(room);
             
         }
         public IActionResult About()
@@ -34,9 +35,12 @@ namespace Rooms.Controllers
         {
             return View();
         }
-        public IActionResult Room()
+        [HttpGet]
+        public IActionResult Room(int pageNumber , int pageSize = 5)
         {
-            return View();
+            pageNumber++;
+            var data = _service.GetByPage(pageNumber, pageSize);
+            return View(data);
         }
         public IActionResult OurTeam()
         {

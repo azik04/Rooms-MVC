@@ -16,6 +16,7 @@ namespace Rooms.ServiceRegistration
             Services.AddScoped<IRoomService, RoomService>();
             Services.AddScoped<IOrderService, OrderService>();
             Services.AddScoped<ICommentService, CommentService>();
+            //Services.AddScoped<IMailService, MailService>();
 
             Services.AddIdentity<Users, IdentityRole>()
      .AddEntityFrameworkStores<ApplicationDbContext>()

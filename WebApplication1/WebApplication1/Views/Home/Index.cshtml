@@ -1,0 +1,15 @@
+﻿@using WebApplication1.Models.Authentication.SignUp;
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model Register 
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<form method="post">
+    <input placeholder="UserName" type="text" asp-for="UserName" />
+    <input placeholder="Email" type="email" asp-for="Email" />
+    <input placeholder="Password" type="text" asp-for="Password" />
+    <button type="submit">Submit</button>
+</form>
