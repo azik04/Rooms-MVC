@@ -6,6 +6,8 @@ namespace Rooms.Models
     {
         public string Body { get; set; }
         public int UserId { get; set; }
+        public Register User { get; set; }
         public int RoomId { get; set; }
+        public Room Room { get; set; }
     }
 }

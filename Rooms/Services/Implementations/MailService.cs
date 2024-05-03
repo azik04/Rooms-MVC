@@ -5,7 +5,7 @@ using Rooms.Services.Interfaces;
 
 namespace Rooms.Services.Implementations;
 
-public class MailService
+public class MailService : IMailService
 {
         private readonly IWebHostEnvironment _env;
 
@@ -39,7 +39,7 @@ public class MailService
             smtp.Host = "smtp.mail.ru";
             smtp.EnableSsl = true;
 
-            NetworkCredential networkCred = new NetworkCredential("hacibalaev.azik@mail.ru", "Anelya1978");
+            NetworkCredential networkCred = new NetworkCredential("hacibalaev.azik@mail.ru", "Reshad1976");
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = networkCred;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;

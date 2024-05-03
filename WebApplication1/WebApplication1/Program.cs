@@ -21,7 +21,7 @@ builder.Services.AddAuthentication(opt =>
 
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
-    options.UseSqlServer(connection);
+    options.UseInMemoryDatabase("Test");
     }
 );
 var app = builder.Build();

@@ -6,5 +6,6 @@ namespace Rooms.Models
     {
         public string PhotoName { get; set; }
         public int RoomId { get; set; }
+        public Room Room { get; set; }
     }
 }
