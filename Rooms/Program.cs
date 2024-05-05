@@ -19,7 +19,7 @@ builder.Services.AddAuthentication();
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseInMemoryDatabase("Test");
+    options.UseSqlServer(connection);
 });
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IOrderService, OrderService>();

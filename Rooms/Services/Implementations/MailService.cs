@@ -39,7 +39,7 @@ public class MailService : IMailService
             smtp.Host = "smtp.mail.ru";
             smtp.EnableSsl = true;
 
-            NetworkCredential networkCred = new NetworkCredential("hacibalaev.azik@mail.ru", "Reshad1976");
+            NetworkCredential networkCred = new NetworkCredential("hacibalaev.azik@mail.ru", "4RgiQRYXJ9YtJDghRSms\r\n");
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = networkCred;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;

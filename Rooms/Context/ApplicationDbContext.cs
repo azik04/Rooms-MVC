@@ -19,8 +19,8 @@ namespace Rooms.Context
         private static void SeedRoles(ModelBuilder model)
         {
             model.Entity<IdentityRole>().HasData(
-                new IdentityRole() { Id = "1", Name = "User", ConcurrencyStamp = "1", NormalizedName = "User" },
-                new IdentityRole() { Id = "2", Name = "Admin", ConcurrencyStamp = "2", NormalizedName = "Admin" }
+                new IdentityRole() { Name = "User", ConcurrencyStamp = "1", NormalizedName = "User" },
+                new IdentityRole() { Name = "Admin", ConcurrencyStamp = "2", NormalizedName = "Admin" }
                 );
         }
         public DbSet<Comments> Comments { get; set; }
