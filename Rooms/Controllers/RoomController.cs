@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Rooms.Models;
 using Rooms.Services.Interfaces;
 using Rooms.ViewModels;
@@ -20,23 +21,33 @@ namespace Rooms.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize
+            ]
+        
         public async Task<IActionResult> CreateRoom(CreateRoomViewModel room)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             await _service.Create(room);
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdRoom(int id)
         {
             var data = await _service.Get(id);
             return View(data);
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UpdRoom(Room room)
         {
             await _service.Update(room);
             return RedirectToAction("Index", "Home");
         }
+        [Authorize]
         public async Task<IActionResult> DeleteRoom(int id)
         {
             await _service.Delete(id);

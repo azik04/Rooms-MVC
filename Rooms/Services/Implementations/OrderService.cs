@@ -13,7 +13,7 @@ namespace Rooms.Services.Implementations
         {
             _db = db;
         }
-        public async Task<Bookeds> Create(CreateBookingViewModel order)
+        public async Task<Bookeds> Create(CreateBookingViewModel order, string username)
         {
                 Bookeds data = new Bookeds()
                 {
@@ -21,7 +21,7 @@ namespace Rooms.Services.Implementations
                     RoomId = order.RoomId,
                     CheckIn = order.CheckIn,
                     CheckOut = order.CheckOut,
-                    UserId = order.UserId,
+                    UserName = username,
                     Request = order.Request,
                 };
                 await _db.Orders.AddAsync(data);
@@ -29,13 +29,13 @@ namespace Rooms.Services.Implementations
                 return data;
         }
 
-        public ICollection<Bookeds> GetByUser(int userId)
-        {
-            var ord = _db.Orders.Where(x => x.Id == userId).ToList();
-            return ord;
-        }
+        //public ICollection<Bookeds> GetByUser(string userName)
+        //{
+        //    var ord = _db.Orders.Where(x => x.UserName == userName).ToList();
+        //    return ord;
+        //}
 
-        public ICollection<Bookeds> GetOrders(int pg = 1)
+        public ICollection<Bookeds> GetOrders()
         {
             var ord = _db.Orders.Where(x => !x.IsDeleted).ToList();
             return ord;

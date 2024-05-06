@@ -1,22 +1,26 @@
-﻿@{
+﻿@using Rooms.ViewModels;
+@{
     ViewData["Title"] = "Home Page";
 }
-@model Register 
+@model RegisterViewModel
 <div class="container">
     <div class="text-center">
         <h1 class="display-4">Welcome</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     </div>
     <div class="form-container">
-        <form method="post">
+        <form method="post" asp-controller="Account" asp-action="Register">
             <div class="form-group">
-                <input class="form-control" placeholder="Username" type="text" name="username">
+                <input class="form-control" placeholder="Username" type="text" asp-for="@Model.UserName">
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input class="form-control" placeholder="Email" type="email" name="email">
+                <input class="form-control" placeholder="Email" type="email" asp-for="@Model.Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input class="form-control" placeholder="Password" type="password" name="password">
+                <input class="form-control" placeholder="Password" type="password" asp-for="@Model.Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Submit</button>
         </form>

@@ -1,9 +1,13 @@
-﻿namespace Rooms.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Rooms.ViewModels
 {
     public class LogInViewModel
     {
+        [Required(ErrorMessage = "Please, wright your Name")]
         public string? Email { get; set; }
-        public string UserName { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
         public string? Password { get; set; }
     }
 }

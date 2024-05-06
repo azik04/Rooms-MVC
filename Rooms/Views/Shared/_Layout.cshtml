@@ -89,12 +89,7 @@
                                         <a href="/Order/Booking" class="dropdown-item">Booking</a>
                                         <a href="/Home/OurTeam" class="dropdown-item">Our Team</a>
                                         <a href="/Home/Testimonial" class="dropdown-item">Testimonial</a>
-                                        <a href="/Home/Register" class="dropdown-item">Register</a>
-                                        <a href="/Home/LogIn" class="dropdown-item">LogIn</a>
-                                        <form asp-controller="Home" asp-action="LogOut" method="post">
-                                            <button type="submit">LogOut</button>
-                                        </form>
-                                        <a href="/Home/GetByUser" class="dropdown-item">Get By User</a>
+                                        <a href="/Order/GetByUser" class="dropdown-item">Get By User</a>
                                     </div>
                                 </div>
                                 <a href="/Home/Contact" class="nav-item nav-link">Contact</a>
@@ -109,6 +104,9 @@
                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Account</a>
                                     <div class="dropdown-menu rounded-0 m-0">
                                         <a href="/Account/Register" class="dropdown-item">Register</a>
+                                        <form asp-controller="Account" asp-action="Logout" method="post">
+                                            <button type="submit">LogOut</button>
+                                        </form>
                                         <a asp-controller="Account" asp-action="LogIn" class="dropdown-item">Log In</a>
                                     </div>
                                 </div>

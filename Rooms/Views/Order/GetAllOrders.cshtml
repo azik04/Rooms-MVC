@@ -19,11 +19,11 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td data-label="Name">@item.UserId</td>
-                        <td data-label="Room">@item.RoomId</td>
+                        @* <td data-label="Name">@item.UserName</td> *@
+                        @* <td data-label="Room">@item.RoomId</td>
                         <td data-label="Request">@item.Request</td>
                         <td data-label="CheckIn">@item.CheckIn</td>
-                        <td data-label="CheckOut">@item.CheckOut</td>
+                        <td data-label="CheckOut">@item.CheckOut</td> *@
                         <td data-label="Remove">
                             <a class="btn btn-danger" href="/Order/RemoveOrder/@item.Id">Remove</a>
                         </td>

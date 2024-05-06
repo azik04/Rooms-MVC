@@ -36,8 +36,12 @@ namespace Rooms.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Register(Register reg)
+        public async Task<IActionResult> Register(RegisterViewModel reg)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             var user = await _userManager.FindByEmailAsync(reg.Email);
             if (user != null)
             {
@@ -50,7 +54,7 @@ namespace Rooms.Controllers
                 Email = reg.Email
             };
             var result = await _userManager.CreateAsync(newUser, reg.Password);
-            //await _userManager.AddToRoleAsync(newUser, "User");
+            await _userManager.AddToRoleAsync(newUser, "User");
             string token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
 
             var link = Url.Action(action: "verifyemail", controller: "account", values: new { token, newUser.Email }, protocol: Request.Scheme);
@@ -89,6 +93,10 @@ namespace Rooms.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LogInViewModel loginVm)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             var appUser = await _userManager.FindByEmailAsync(loginVm.Email);
             //if(appUser.EmailConfirmed == false)
             //{
@@ -112,33 +120,52 @@ namespace Rooms.Controllers
                 ModelState.AddModelError("", "Username or password is not correct");
                 return View(loginVm);
             }
-            //else
-            //{
-            //    var authClaim = new List<Claim>
-            //    {
-            //        new Claim(ClaimTypes.Name , appUser.UserName),
-            //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            //    };
-            //}
+            else
+            {
+                var authClaim = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, appUser.UserName),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+    };
+                var token = GetToken(authClaim);
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                Response.Cookies.Append("JWT", tokenString, new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddHours(3), 
+                    HttpOnly = true,
+                    Secure = true 
+                });
+            }
             return RedirectToAction("Index", "Home"); 
         }
 
-        //private JwtSecurityToken GetToken(List<Claim> authClaims)
-        //{
-        //    var authSigninKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:secret"]));
-        //    var token = new JwtSecurityToken(
-        //        issuer: _configuration["JWT:ValidIssuer"],
-        //        audience: _configuration["JWT:ValidAudience"],
-        //        expires: DateTime.Now.AddHours(3),
-        //        claims: authClaims,
-        //        signingCredentials: new SigningCredentials(authSigninKey, SecurityAlgorithms.HmacSha256)
-        //        );
-        //    return token;
-        //}
+        private string secureKey = "2F88ED77-6971-4441-BC97-B09427300B5A";
+        private JwtSecurityToken GetToken(List<Claim> authClaims)
+        {
+            if (string.IsNullOrEmpty(secureKey))
+            {
+                throw new InvalidOperationException("JWT secret is missing or empty.");
+            }
+
+            
+            
+            var authSigninKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secureKey));
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddHours(3),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigninKey, SecurityAlgorithms.HmacSha256)
+                );
+            return token;
+        }
 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            Response.Cookies.Delete("jwt"); 
             return RedirectToAction("index", "home");
         }
 
