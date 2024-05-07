@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.X509;
 using Rooms.Models;
 using Rooms.Services.Interfaces;
 using Rooms.ViewModels;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Rooms.Controllers
 {
@@ -53,6 +56,7 @@ namespace Rooms.Controllers
             await _service.Delete(id);
             return RedirectToAction("Index", "Home");
         }
+        [HttpGet]
         public async Task<IActionResult> GetById(int id)
         {
             var data = await _service.Get(id);
@@ -69,7 +73,13 @@ namespace Rooms.Controllers
         [HttpPost]
         public async Task<IActionResult> GetById(Comments com)
         {
-            _commentService.CreateComment(com);
+            string jwtToken = Request.Cookies["JWT"];
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(jwtToken);
+            var username = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+            com.UserName = username;
+            await _commentService.CreateComment(com);
             return RedirectToAction("Index", "Home");
         }
     }

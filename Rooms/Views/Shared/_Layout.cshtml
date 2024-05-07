@@ -103,11 +103,17 @@
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Account</a>
                                     <div class="dropdown-menu rounded-0 m-0">
+                                        @if(User.Identity.IsAuthenticated == false)
+                                        {
                                         <a href="/Account/Register" class="dropdown-item">Register</a>
-                                        <form asp-controller="Account" asp-action="Logout" method="post">
-                                            <button type="submit">LogOut</button>
-                                        </form>
                                         <a asp-controller="Account" asp-action="LogIn" class="dropdown-item">Log In</a>
+                                        }
+                                        @if (User.Identity.IsAuthenticated == true)
+                                        {
+                                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                                <button type="submit">LogOut</button>
+                                            </form>
+                                        }
                                     </div>
                                 </div>
                             </div>

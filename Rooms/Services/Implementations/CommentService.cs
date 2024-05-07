@@ -18,6 +18,7 @@ namespace Rooms.Services.Implementations
                 Body = comments.Body,
                 CreatedAt = DateTime.Now,
                 RoomId = comments.RoomId,
+                UserName = comments.UserName,
             };
             await _db.Comments.AddAsync(com);
             await _db.SaveChangesAsync();

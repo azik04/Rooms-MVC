@@ -16,27 +16,56 @@
         </div>
         <div>
             <h1>Comments</h1>
-            @if (Model.Comment != null && Model.Comment.Count > 0)
+            @if (Model.Comment != null )
             {
-                @foreach (var item in Model.Comment)
-                {
-                    <p>@item.Body</p>
-                }
+                <div class="container mt-5">
+                    @foreach (var item in Model.Comment)
+                    {
+                        <div class="comment-box">
+                            <div class="comment-author">@item.UserName</div>
+                            <div class="comment-date">@item.CreatedAt.ToString("MMMM dd, yyyy")</div>
+                            <div class="comment-content">@item.Body</div>
+                        </div>
+                    }
+                </div>
             }
             else
             {
                 <p>No comments available.</p>
             }
+            <div class="container mt-5">
             <form method="post">
                 <div class="form-group">
                     <label for="commentBody">Comment</label>
                     <input asp-for="Body" class="form-control" id="commentBody" />
                 </div>
-                <input type="hidden" asp-for="UserId" value="1" />
+                <input type="hidden" asp-for="UserName" value="UserName" />
                 <input type="hidden" asp-for="RoomId" value="@Model.Id" />
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
-            
+            </div>
         </div>
     </div>
 </div>
+<style>
+    .comment-box {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    .comment-author {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .comment-date {
+        font-size: 0.8rem;
+        color: #777;
+    }
+
+    .comment-content {
+        margin-top: 10px;
+    }
+</style>
