@@ -27,5 +27,6 @@ namespace Rooms.Context
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Bookeds> Orders { get; set; }
         public DbSet<RoomPhotos> Photos { get; set; }
+        public DbSet<Contackt> Contackts { get; set; }
     }
 }

@@ -11,9 +11,11 @@ namespace Rooms.Controllers
     public class HomeController : Controller
     {
         private readonly IRoomService _service;
-        public HomeController(IRoomService service)
+        private readonly IContactService _contactService;
+        public HomeController(IRoomService service, IContactService contactService)
         {
             _service = service;
+            _contactService = contactService;
         }
         [HttpGet]
         public IActionResult Index()
@@ -27,19 +29,24 @@ namespace Rooms.Controllers
         {
             return View();
         }
-        public IActionResult Contact()
+        public async Task<IActionResult> Contact()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Contact(Contackt contact)
+        {
+            _contactService.Create(contact);
+            return RedirectToAction("Index");
         }
         public IActionResult Service()
         {
             return View();
         }
         [HttpGet]
-        public IActionResult Room(int pageNumber , int pageSize = 5)
+        public IActionResult Room()
         {
-            pageNumber++;
-            var data = _service.GetByPage(pageNumber, pageSize);
+            var data = _service.GetAll();
             return View(data);
         }
         public IActionResult OurTeam()

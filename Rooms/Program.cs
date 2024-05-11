@@ -25,6 +25,7 @@ builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IContactService, ContacktService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

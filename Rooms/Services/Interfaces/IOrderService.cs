@@ -7,7 +7,6 @@ namespace Rooms.Services.Interfaces
     {
         Task<Bookeds> Create(CreateBookingViewModel order , string username);
         ICollection<Bookeds> GetOrders();
-        //ICollection<Bookeds> GetByUser(string userName);
         Task<Bookeds> Remove(int id);
     }
 }

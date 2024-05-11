@@ -24,10 +24,9 @@ namespace Rooms.Controllers
             return View();
         }
         [HttpPost]
-        [Authorize
-            ]
+        [Authorize]
         
-        public async Task<IActionResult> CreateRoom(CreateRoomViewModel room)
+        public async Task<IActionResult> CreateRoom([FromForm]CreateRoomViewModel room)
         {
             if (!ModelState.IsValid)
             {
