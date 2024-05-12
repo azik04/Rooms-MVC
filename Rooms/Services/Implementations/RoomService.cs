@@ -92,11 +92,23 @@ namespace Rooms.Services.Implementations
             }
             return data;
         }
-
-        public List<Room> GetByPage(int pageNumber, int pageSize)
+        public List<Room> GetByPage(int page)
         {
-            int startIndex = (pageNumber - 1) * pageSize;
-            var data = _db.Rooms.Where(x => !x.IsDeleted).Skip(startIndex).Take(pageSize).ToList();
+            const int pageSize = 3; 
+            var skipAmount = page * pageSize;
+
+            var data = _db.Rooms
+                            .Where(x => !x.IsDeleted)
+                            .Skip(skipAmount)
+                            .Take(pageSize)
+                            .ToList();
+
+            foreach (var item in data)
+            {
+                item.RoomPhotos = _db.Photos.Where(x => x.RoomId == item.Id).ToList();
+                item.Comment = _db.Comments.Where(x => x.RoomId == item.Id).ToList();
+            }
+
             return data;
         }
 

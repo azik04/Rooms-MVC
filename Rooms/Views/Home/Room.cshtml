@@ -71,7 +71,7 @@
                 <h6 class="section-title text-center text-primary text-uppercase">Our Rooms</h6>
                 <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
             </div>
-            <div class="row g-4">
+            <div class="row g-4" id="roomListContainer">
                 @foreach (var item in Model)
                 {
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -113,7 +113,7 @@
                     </div>
 
                 }
-                <button type="button" id="loadMoreRooms">More Rooms...</button>
+                <button type="button" id="loadMoreRooms" asp-controller="Home" asp-action="Room">More Rooms...</button>
         </div>
     </div>
     <!-- Room End -->
@@ -247,26 +247,4 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
-
-    <script>
-        $(document).ready(function () {
-            var pageNumber = 1; 
-            var pageSize = 5; 
-
-            $('#loadMoreRooms').click(function () {
-                $.ajax({
-                    url: '/Room',
-                    type: 'GET',
-                    data: { pageNumber: pageNumber, pageSize: pageSize }, 
-                    success: function (data) {
-                        $('#roomContainer').append(data); 
-                        pageNumber++; 
-                    },
-                    error: function () {
-                        console.error('Failed to load more rooms.');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -104,5 +104,23 @@
             }
         }
     });
+    var page = 1; // Initialize page counter
 
+    document.getElementById("loadMoreRooms").addEventListener("click", function () {
+        var url = "/YourController/GetByPage?page=" + page;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var roomListContainer = document.getElementById("roomListContainer");
+
+                data.forEach(room => {
+                    // Append new room items to the existing list
+                    var roomHtml = `<div class="room-item">...</div>`; // Replace '...' with your room item HTML
+                    roomListContainer.innerHTML += roomHtml;
+                });
+
+                page++; // Increment page counter for the next fetch
+            })
+            .catch(error => console.error('Error:', error));
 })(jQuery);

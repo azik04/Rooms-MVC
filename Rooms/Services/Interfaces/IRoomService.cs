@@ -10,6 +10,6 @@ namespace Rooms.Services.Interfaces
         Task<Room> Delete(int id);
         Task<Room> Get(int id);
         List<Room> GetAll();
-        List<Room> GetByPage(int pageNumber, int pageSize);
+        List<Room> GetByPage(int page);
     }
 }

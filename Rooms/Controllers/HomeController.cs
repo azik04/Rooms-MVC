@@ -44,9 +44,9 @@ namespace Rooms.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Room()
+        public IActionResult Room(int page)
         {
-            var data = _service.GetAll();
+            var data = _service.GetByPage(page);
             return View(data);
         }
         public IActionResult OurTeam()
